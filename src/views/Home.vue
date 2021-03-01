@@ -20,6 +20,7 @@
             <br>
             <br>
             <button type="button" v-on:click="login()">Login</button>
+
         </div>
       </b-col>
     </b-row>
@@ -29,6 +30,7 @@
 </template>
 
 <script>
+/* eslint-disable */ 
 export default {
   name: 'Login',
   data () {
