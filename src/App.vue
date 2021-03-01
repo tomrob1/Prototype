@@ -1,11 +1,18 @@
 <template>
   <div id="app">
+    <!--- This could be made to header and footer components and imported here -->
+    <!-- EG <app-header></app-header> -->
     <div id="nav">
       <router-link to="/">Home</router-link> |
       <router-link to="/about">About</router-link>
     </div>
-    <router-view/>
+    <!-- PAGES SHOWN THROUGH HERE IN ROUTER VIEW -->
+    <!-- Container could be changed to fluid -->
+    <b-container>
+      <router-view/>
+    </b-container>
   </div>
+  <!-- EG <app-footer></app-footer> -->
 </template>
 
 <style>

@@ -1,3 +1,4 @@
+// Import Pages as they're created and add to router list
 import Vue from 'vue'
 import VueRouter from 'vue-router'
 import Home from '../views/Home.vue'
