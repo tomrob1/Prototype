@@ -4,7 +4,8 @@
     <!-- EG <app-header></app-header> -->
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/room">Room</router-link> |
+      <router-link to="/dashboard">Dashboard</router-link>
     </div>
     <!-- PAGES SHOWN THROUGH HERE IN ROUTER VIEW -->
     <!-- Container could be changed to fluid -->
