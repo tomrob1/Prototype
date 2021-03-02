@@ -8,7 +8,6 @@
   <b-container class="bv-example-row">
     <b-row>
       <!--Evenly spaced columns -->
-      <b-col>1 of 4</b-col>
       <b-col>2 of 4</b-col>
       <b-col>3 of 4</b-col>
       <b-col>
