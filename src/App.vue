@@ -8,7 +8,6 @@
       <router-link to="/dashboard">Dashboard</router-link>
     </div>
     <!-- PAGES SHOWN THROUGH HERE IN ROUTER VIEW -->
-    <!-- Container could be changed to fluid -->
     <b-container>
       <router-view/>
     </b-container>
