@@ -1,0 +1,4 @@
+https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/room-6.025/occupancy-sensor/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-27T23:59:59
+https://api.usb.urbanobservatory.ac.uk/api/v2.0a/sensors/entity?meta:roomNumber=2.048
+https://api.usb.urbanobservatory.ac.uk/api/v2.0a/sensors/entity?metric=occupied+%22room%20temperature%22
+https://api.usb.urbanobservatory.ac.uk/api/v2.0a/sensors/entity?meta:buildingFloor=G

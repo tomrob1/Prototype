@@ -16,8 +16,11 @@
             <input type="password" name="password" v-model="input.password" placeholder="Password" />
             <br>
             <br>
-            <button type="button" v-on:click="login()">Login</button>
+            <button type="button"  :disabled="loggingIn">Login</button>
+            <p v-show="loggingIn"></p>
         </div>
+      </b-col>
+      <b-col>
       </b-col>
     </b-row>
   </b-container>
@@ -33,12 +36,18 @@ export default {
     return {
       input: {
         username: '',
-        password: ''
+        password: '',
+        submitted: false
       }
     }
   },
   methods: {
-  }
+  },
+  computed: {
+  },
+  // Lifecyle hooks:
+  created () {
+  } 
 }
 </script>
 
