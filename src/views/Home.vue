@@ -16,8 +16,7 @@
             <input type="password" name="password" v-model="input.password" placeholder="Password" />
             <br>
             <br>
-            <button type="button"  :disabled="loggingIn">Login</button>
-            <p v-show="loggingIn"></p>
+            <button type="button">Login</button>
         </div>
       </b-col>
       <b-col>
