@@ -4,7 +4,7 @@
           <!------------------------------------------------------------------------------------------------------->
           <form name="form1" id="form" action="/action_page.php">
             Floor:
-            <select name="subject" v-model="floorSelect" @change="onChange($event)" >
+            <select name="subject" v-model="floorSelect" @change="onChange($event)">
               <option  v-for="(floor) in floors" :key="floor.index" :value="floor.index" >{{floor.number}}</option>
               <!-- For loop loops through all the available room numbers and inputs these into the dropdown - these should be limited for each person, general public should only have access to first floor, students to all available rooms up to 3rd floor, staff/phd rooms to 4th floor, manager/building supervisor has access to all rooms including receptions  -->
             </select>
@@ -13,7 +13,7 @@
           <!--  ----------------USER FILTERED RESULT------------------------------------------------------------------------------------->
           <form name="form2" id="form" action="/action_page.php">
             Room:
-            <select name="subject">
+            <select name="subject" v-model="roomSelect"  @change="onChangeRoom($event)">
               <!--Do we need :value here -->
               <option  v-for="(room,index) in filterResult" :key="index" :value="room" >{{room}}</option>
               <!-- For loop loops through all the available room numbers and inputs these into the dropdown - these should be limited for each person, general public should only have access to first floor, students to all available rooms up to 3rd floor, staff/phd rooms to 4th floor, manager/building supervisor has access to all rooms including receptions  -->
@@ -31,6 +31,7 @@ export default {
   data () {
     return {
       floorSelect:null,
+      roomSelect:null,
       rooms: null, //Array to store data
       filterResult: null,
       floors: [{number:'G', index: 0}, //Options for floor picks
@@ -56,6 +57,18 @@ export default {
     onChange(event){
       console.log(event.target.value)
       this.filterResult = this.rooms[event.target.value].rooms
+    },
+    onChangeRoom(event){
+      console.log(event.target.value)
+      var res = event.target.value.replaceAll(" ","-")
+      console.log(res)
+      var url = "http://18.132.43.65:8090/get_data/"+res
+      console.log(url)
+      axios.get(url)
+      .then(response => {
+        console.log(response.data)
+      })
+
     }
     //Pass result to filter method, returning floors in dataset
   },

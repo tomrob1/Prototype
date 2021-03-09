@@ -2,3 +2,8 @@ https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/room-6.025/occu
 https://api.usb.urbanobservatory.ac.uk/api/v2.0a/sensors/entity?meta:roomNumber=2.048
 https://api.usb.urbanobservatory.ac.uk/api/v2.0a/sensors/entity?metric=occupied+%22room%20temperature%22
 https://api.usb.urbanobservatory.ac.uk/api/v2.0a/sensors/entity?meta:buildingFloor=G
+
+http://18.132.43.65:8090/get_data/room-G.071-Zone-3
+http://18.132.43.65:8090/get_data/Floor-1:-Plant-Room-5
+http://18.132.43.65:8090/get_timeseries/room-6.025/occupancy-sensor/2019-05-27/2019-06-27
+http://18.132.43.65:8090/get_default_rooms
