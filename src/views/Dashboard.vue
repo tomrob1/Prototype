@@ -12,7 +12,6 @@
                   :colors="['red']"
                   :dataSets="co2.datasets"
                 ></vue-frappe>
-                <p>{{this.labels}}</p>
                 </b-col>
             </b-row>
         </b-container>
@@ -31,6 +30,7 @@ export default {
       y_axis: [],
       graph_data : null,
       labels:[],
+      reverse:[],
       co2 :{
         datasets: []
       }
@@ -41,9 +41,10 @@ export default {
     this.setGraphData();
   },
   methods: {
-    createInput() {
-      var url = "https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/room-6.025/co2/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-27T23:59:59"
-      //var url2 = "http://18.132.43.65:8090/get_timeseries/room-6.025/co2/2019-05-27/2019-06-27"
+    async createInput() {
+      var url = "https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/room-6.025/co2/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-29T23:59:59"
+      //var url = "https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/room-6.025/humidity/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-27T23:59:59"
+      //var url = "http://18.132.43.65:8090/get_timeseries/room-6.025/co2/2019-05-27/2019-06-27"
       axios.get(url)
       .then(response => {
         console.log(response.data.historic)
@@ -53,15 +54,13 @@ export default {
           this.y_axis.push(this.graph_data[i].value)
           this.x_axis.push(this.graph_data[i].time)
         }
+        this.x_axis.reverse()
       })
     },
     setGraphData(){
       this.co2.datasets.push({values:this.y_axis})
       this.labels.push({values:this.x_axis})
     },
-  },
-  created:function(){
-    //this.createInput()
   }
 }
 </script>
