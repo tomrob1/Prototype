@@ -42,6 +42,8 @@ export default {
   },
   methods: {
     async createInput() {
+      //var foo = "https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/"+ room + "/" + metric + "/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-29T23:59:59"
+
       var url = "https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/room-6.025/co2/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-29T23:59:59"
       //var url = "https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/room-6.025/humidity/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-27T23:59:59"
       //var url = "http://18.132.43.65:8090/get_timeseries/room-6.025/co2/2019-05-27/2019-06-27"
