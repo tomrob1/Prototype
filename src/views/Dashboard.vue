@@ -30,7 +30,6 @@ export default {
       y_axis: [],
       graph_data : null,
       labels:[],
-      reverse:[],
       co2 :{
         datasets: []
       }
