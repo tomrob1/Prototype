@@ -28,8 +28,8 @@
               <!-- For loop loops through all the available room numbers and inputs these into the dropdown - these should be limited for each person, general public should only have access to first floor, students to all available rooms up to 3rd floor, staff/phd rooms to 4th floor, manager/building supervisor has access to all rooms including receptions  -->
             </select>
           </form>
-          <date-picker v-model="time1" type="date" @change="onChangeDate()"></date-picker>
-          <date-picker v-model="time2" type="date" format="DD-MM"></date-picker>
+          <date-picker v-model="time1" type="date" @change="onChangeDate()" format="YYYY-MM-DD"></date-picker>
+          <date-picker v-model="time2" type="date" format="YYYY-MM-DD"></date-picker>
             <b-row>
                 <b-col>
                 <vue-frappe v-if="showgraph"
@@ -124,28 +124,40 @@ export default {
     // Need to change room value to fit USB uni api
     // room-6.025
     onChangeMetric (event) {
+      this.showgraph = false
       var res = event.target.value.replaceAll(' ', '-').toLowerCase() // Hyphenate and lowercase metric value
       // Need to add date part
+      console.log(this.time1.toTimeString())
       var url = 'https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/' + this.apiRoom + '/' + res + '/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-29T23:59:59'
-      // var url = 'https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/' + this.apiRoom + '/' + res + '/raw/historic?startTime=' + this.time1.getFullYear() + '-' + this.time1.getMonth() + '-' + this.time1.getDate() + 'T00:00:00Z&endTime=2019-05-29T23:59:59'
+
+      // var url = 'https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/' + this.apiRoom + '/' + res + '/raw/historic?startTime=' + this.time1.getFullYear() + '-' + this.time1.getMonth() + '-' + this.time1.getDate() + 'T00:00:00Z&endTime=' + this.time2.getFullYear() + '-' + this.time2.getMonth() + '-' + this.time2.getDate() + 'T23:59:59'
       // 2019-05-27
       console.log(url)
       axios.get(url)
         .then(response => {
           // console.log(response.data.historic)
-          this.graph_data = response.data.historic.values
-          var type = response.data.timeseries.parentFeed.metric
-          console.log(type)
-          let i = 0
-          for (i; i < this.graph_data.length; i++) {
-            this.y_axis.push(this.graph_data[i].value)
-            this.x_axis.push(this.graph_data[i].time)
+          if (this.graph_data == null) {
+            this.graph_data = response.data.historic.values
+            var type = response.data.timeseries.parentFeed.metric
+            console.log(type)
+          } else {
+            this.graph_data = []
+            this.x_axis = []
+            this.y_axis = []
+            this.labels = []
+            this.co2.datasets = []
+            this.graph_data = response.data.historic.values
           }
-          this.x_axis.reverse()
           this.setGraphData()
         })
     },
     setGraphData () {
+      let i = 0
+      for (i; i < this.graph_data.length; i++) {
+        this.y_axis.push(this.graph_data[i].value)
+        this.x_axis.push(this.graph_data[i].time)
+      }
+      this.x_axis.reverse() // puts x-axis in right order
       // add if statemtent here for if graph data is empty?
       this.co2.datasets.push({ values: this.y_axis })
       this.labels.push({ values: this.x_axis })
