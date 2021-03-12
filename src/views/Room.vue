@@ -28,8 +28,8 @@
               <!-- For loop loops through all the available room numbers and inputs these into the dropdown - these should be limited for each person, general public should only have access to first floor, students to all available rooms up to 3rd floor, staff/phd rooms to 4th floor, manager/building supervisor has access to all rooms including receptions  -->
             </select>
           </form>
-          <date-picker v-model="time1" type="datetime"></date-picker>
-          <date-picker v-model="time2" type="datetime"></date-picker>
+          <date-picker v-model="time1" type="date" @change="onChangeDate()"></date-picker>
+          <date-picker v-model="time2" type="date" format="DD-MM"></date-picker>
             <b-row>
                 <b-col>
                 <vue-frappe v-if="showgraph"
@@ -84,6 +84,10 @@ export default {
         { number: 'Roof', index: 7 }]
     }
   },
+  beforeDestroy: function () {
+    this.x_axis.length = 0
+    this.y_axis.length = 0
+  },
   async mounted () {
     await this.createInput()
   },
@@ -120,32 +124,37 @@ export default {
     // Need to change room value to fit USB uni api
     // room-6.025
     onChangeMetric (event) {
-      console.log(event.target.value)
       var res = event.target.value.replaceAll(' ', '-').toLowerCase() // Hyphenate and lowercase metric value
-      console.log(res)
       // Need to add date part
-      var url = 'https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/+' + this.apiRoom + '/' + res + '/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-29T23:59:59'
+      var url = 'https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/' + this.apiRoom + '/' + res + '/raw/historic?startTime=2019-05-27T00:00:00Z&endTime=2019-05-29T23:59:59'
+      // var url = 'https://api.usb.urbanobservatory.ac.uk/api/v2/sensors/timeseries/' + this.apiRoom + '/' + res + '/raw/historic?startTime=' + this.time1.getFullYear() + '-' + this.time1.getMonth() + '-' + this.time1.getDate() + 'T00:00:00Z&endTime=2019-05-29T23:59:59'
+      // 2019-05-27
       console.log(url)
       axios.get(url)
         .then(response => {
           // console.log(response.data.historic)
           this.graph_data = response.data.historic.values
+          var type = response.data.timeseries.parentFeed.metric
+          console.log(type)
           let i = 0
           for (i; i < this.graph_data.length; i++) {
             this.y_axis.push(this.graph_data[i].value)
             this.x_axis.push(this.graph_data[i].time)
           }
           this.x_axis.reverse()
+          this.setGraphData()
         })
-      this.setGraphData()
-      this.$nextTick(function () {
-
-      })
     },
     setGraphData () {
+      // add if statemtent here for if graph data is empty?
       this.co2.datasets.push({ values: this.y_axis })
       this.labels.push({ values: this.x_axis })
       this.showgraph = true
+    },
+    onChangeDate (event) {
+      console.log(this.time1.getDate())
+      console.log(this.time1.getMonth())
+      console.log(this.time1.getFullYear())
     }
   }
 
